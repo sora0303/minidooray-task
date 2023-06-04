@@ -7,7 +7,8 @@ Content-Type: application/json
 {
   "name": "프로젝트 이름",
   "description": "프로젝트 설명",
-  "memberId": 1
+  "memberId": 1,
+  "memberName": "홍길동"
 }
 
 ### 프로젝트 기본 설정 수정
@@ -16,13 +17,13 @@ Host: localhost:8080
 Content-Type: application/json
 
 {
-  "status": "휴면",
+  "status": "개시",
   "name": "",
   "description": ""
 }
 
 ### 프로젝트 멤버 등록
-POST /api/projects/{id}/members
+POST /api/projects/{projectId}/members
 Host: localhost:8080
 Content-Type: application/json
 
@@ -31,7 +32,7 @@ Content-Type: application/json
 }
 
 ### 프로젝트 멤버 역할 수정
-PUT /api/projects/{id}/members/{memberId}
+PUT /api/projects/{projectId}/members/{memberId}
 Host: localhost:8080
 Content-Type: application/json
 
@@ -40,14 +41,14 @@ Content-Type: application/json
 }
 
 ### 프로젝트 멤버 삭제
-DELETE /api/projects/{id}/members/{memberId}
+DELETE /api/projects/{projectId}/members/{memberId}
 Host: localhost:9090
 Content-Type: application/json
 
 
 ### 프로젝트 삭제
-DELETE /api/projects/{id}
-Host: localhost:8080
+DELETE /api/projects/1
+Host: localhost:9090
 Content-Type: application/json
 
 
@@ -57,7 +58,7 @@ Host: localhost:8080
 Content-Type: application/json
 
 ### 프로젝트 아이디로 조회
-GET /api/projects/{id}
+GET /api/projects/{projectId}
 Host: localhost:8080
 Content-Type: application/json
 

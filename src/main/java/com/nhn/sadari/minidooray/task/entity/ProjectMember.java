@@ -34,6 +34,10 @@ public class ProjectMember {
     @JoinColumn(name = "project_id")
     private Project project;
 
+    @Column(name = "member_name")
+    @NotNull
+    private String memberName;
+
     @Enumerated(EnumType.STRING)
     @NotNull
     private ProjectMemberRoleType role;

@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectRegisterResponse {
+public class IdResponse {
 
-    Long projectId;
+    Long id;
+
 }

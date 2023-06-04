@@ -6,6 +6,6 @@ import com.nhn.sadari.minidooray.task.domain.ProjectRegisterRequest;
 public interface ProjectService {
 
     Long createProject(ProjectRegisterRequest projectRegisterRequest);
-    void modifyProject(Long projectId, ProjectModifyRequest projectModifyRequest);
-    void deleteProject(Long projectId);
+    Long modifyProject(Long projectId, ProjectModifyRequest projectModifyRequest);
+    Long deleteProject(Long projectId);
 }

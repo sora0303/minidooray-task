@@ -19,4 +19,7 @@ public class ProjectRegisterRequest {
     @NotNull
     private Long memberId;
 
+    @NotNull
+    private String memberName;
+
 }

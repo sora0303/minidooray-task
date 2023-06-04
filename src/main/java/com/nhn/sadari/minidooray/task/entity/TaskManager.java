@@ -21,6 +21,9 @@ public class TaskManager {
     @EmbeddedId
     private Pk pk;
 
+    @Column(name = "member_name")
+    private String memberName;
+
     @NoArgsConstructor
     @AllArgsConstructor
     @Embeddable

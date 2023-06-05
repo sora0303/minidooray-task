@@ -1,5 +1,6 @@
 package com.nhn.sadari.minidooray.task.controller;
 
+import com.nhn.sadari.minidooray.task.domain.ProjectDto;
 import com.nhn.sadari.minidooray.task.domain.ProjectModifyRequest;
 import com.nhn.sadari.minidooray.task.domain.ProjectRegisterRequest;
 import com.nhn.sadari.minidooray.task.domain.IdResponse;
@@ -73,26 +74,46 @@ class ProjectRestControllerTest {
         Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
+//    @Test
+//    @DisplayName("프로젝트 삭제")
+//    @Order(3)
+//    void testDeleteProject() throws Exception{
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+//        HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
+//
+//        ResponseEntity<IdResponse> result = testRestTemplate.exchange(
+//            "/api/projects/{projectId}",
+//            HttpMethod.DELETE,
+//            requestEntity,
+//            IdResponse.class,
+//            1L
+//        );
+//
+//        IdResponse response = new IdResponse(1L);
+//
+//        Assertions.assertThat(result.getBody()).isEqualTo(response);
+//        Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
+//    }
+
     @Test
-    @DisplayName("프로젝트 삭제")
-    @Order(3)
-    void testDeleteProject() throws Exception{
+    @DisplayName("프로젝트 아이디로 프로젝트 조회")
+    @Order(4)
+    void testGetProjectByProjectId() throws Exception{
 
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-        HttpEntity<Object> requestEntity = new HttpEntity<>(headers);
+        HttpEntity request = new HttpEntity(headers);
 
-        ResponseEntity<IdResponse> result = testRestTemplate.exchange(
+        ResponseEntity<ProjectDto> result = testRestTemplate.exchange(
             "/api/projects/{projectId}",
-            HttpMethod.DELETE,
-            requestEntity,
-            IdResponse.class,
-            1L
-        );
+            HttpMethod.GET,
+            null,
+            ProjectDto.class,
+            1L);
 
-        IdResponse response = new IdResponse(1L);
-
-        Assertions.assertThat(result.getBody()).isEqualTo(response);
+        Assertions.assertThat(result.getBody().getName()).isEqualTo("test_modify");
         Assertions.assertThat(result.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }

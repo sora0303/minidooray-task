@@ -1,6 +1,11 @@
 package com.nhn.sadari.minidooray.task.advice;
 
 import com.nhn.sadari.minidooray.task.exception.ErrorMessage;
+import com.nhn.sadari.minidooray.task.exception.MilestoneNotFoundException;
+import com.nhn.sadari.minidooray.task.exception.ProjectMemberNotFoundException;
+import com.nhn.sadari.minidooray.task.exception.ProjectNotFoundException;
+import com.nhn.sadari.minidooray.task.exception.TagNotFoundException;
+import com.nhn.sadari.minidooray.task.exception.TaskNotFoundException;
 import com.nhn.sadari.minidooray.task.exception.ValidationFailedException;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +38,8 @@ public class CommonRestControllerAdvice {
     }
 
     //404 Not Found
-    @ExceptionHandler({NoHandlerFoundException.class})
+    @ExceptionHandler({NoHandlerFoundException.class, ProjectNotFoundException.class, TagNotFoundException.class,
+        ProjectMemberNotFoundException.class, MilestoneNotFoundException.class, TaskNotFoundException.class})
     public ResponseEntity<ErrorMessage> eventNotFoundException(Exception exception) {
         ErrorMessage errorMessage = new ErrorMessage(HttpStatus.NOT_FOUND.value(), exception.getMessage());
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);

@@ -149,7 +149,7 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
 
-    //프로젝트 리스트 조회 /api/projects/members/{memberId}
+    //멤버 아이디로 프로젝트 리스트 조회 /api/projects/members/{memberId}
     @Override
     @Transactional
     public List<ProjectDto> getProjectsByMemberId(Long memberId){
@@ -157,7 +157,7 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
 
-    //프로젝트 아이디로 조회 /api/projects/{projectId}
+    //프로젝트 아이디로 프로젝트 아이디로 조회 /api/projects/{projectId}
     @Override
     @Transactional
     public ProjectDto getProjectByProjectId(Long projectId){

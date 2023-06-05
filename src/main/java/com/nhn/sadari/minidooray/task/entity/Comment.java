@@ -5,6 +5,8 @@ import com.sun.istack.NotNull;
 import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,11 +21,12 @@ import lombok.Setter;
 public class Comment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "member_id")
+    @Column(name = "writer_id")
     @NotNull
-    private Long memberId;
+    private Long writerId;
 
     @Column(name = "create_at")
     @NotNull

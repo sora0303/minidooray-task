@@ -2,8 +2,11 @@ package com.nhn.sadari.minidooray.task.entity;
 
 import com.sun.istack.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,6 +22,7 @@ import lombok.Setter;
 public class Task {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -30,9 +34,13 @@ public class Task {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    @Column(name = "member_id")
+    @Column(name = "writer_id")
     @NotNull
-    private Long memberId;
+    private Long writerId;
+
+    @Column(name = "created_at")
+    @NotNull
+    private LocalDateTime createdAt;
 
     @OneToOne
     @JoinColumn(name = "milestone_id")

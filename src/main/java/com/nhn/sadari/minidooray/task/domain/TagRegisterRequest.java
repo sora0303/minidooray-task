@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TagCreateRequest {
+public class TagRegisterRequest {
 
     @NotNull
     private String name;

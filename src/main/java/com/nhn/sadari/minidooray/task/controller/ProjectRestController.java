@@ -33,7 +33,7 @@ public class ProjectRestController {
 
     private final ProjectService projectService;
 
-    //프로젝트 등록
+    //프로젝트 등록 /api/projects
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = {"/", ""})
     public ResponseEntity<IdResponse> createProject(@RequestBody @Valid ProjectRegisterRequest projectRegisterRequest,
@@ -48,7 +48,7 @@ public class ProjectRestController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    //프로젝트 수정
+    //프로젝트 수정 /api/projects/{projectId}
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/{projectId}")
     public ResponseEntity<IdResponse> modifyProject(@PathVariable("projectId") Long projectId,
@@ -64,7 +64,7 @@ public class ProjectRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //프로젝트 삭제
+    //프로젝트 삭제 /api/projects/{projectId}
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = "/{projectId}")
     public ResponseEntity<IdResponse> deleteProject(@PathVariable("projectId") Long projectId) {
@@ -119,7 +119,7 @@ public class ProjectRestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //프로젝트 조회 /api/projects/{projectId}
+    //프로젝트 아이디로 프로젝트 조회 /api/projects/{projectId}
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{projectId}")
     public ResponseEntity<ProjectDto> getProjectByProjectId(@PathVariable("projectId") Long projectId) {

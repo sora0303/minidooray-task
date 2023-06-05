@@ -13,6 +13,7 @@ import com.nhn.sadari.minidooray.task.repository.ProjectRepository;
 import com.nhn.sadari.minidooray.task.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("milestoneService")
@@ -32,6 +33,8 @@ public class MilestoneServiceImpl implements MilestoneService{
     }
 
     //마일스톤 등록 /api/projects/{projectId}/milestones
+    @Override
+    @Transactional
     public Long createMilestone(Long projectId, MilestoneRegisterRequest milestoneRegisterRequest){
 
         Project project = getProject(projectId);
@@ -39,8 +42,8 @@ public class MilestoneServiceImpl implements MilestoneService{
         Milestone milestone = new Milestone();
 
         milestone.setName(milestoneRegisterRequest.getName());
-        milestone.setStartDate(milestone.getStartDate());
-        milestone.setEndDate(milestone.getEndDate());
+        milestone.setStartDate(milestoneRegisterRequest.getStartDate());
+        milestone.setEndDate(milestoneRegisterRequest.getEndDate());
         milestone.setProject(project);
 
         milestoneRepository.save(milestone);
@@ -50,20 +53,24 @@ public class MilestoneServiceImpl implements MilestoneService{
 
 
     //마일스톤 수정 /api/projects/{projectId}/milestones/{milestoneId}
+    @Override
+    @Transactional
     public Long modifyMilestone(Long projectId, Long milestoneId, MilestoneRegisterRequest milestoneRegisterRequest){
 
         Project project = getProject(projectId);
         Milestone milestone = getMilestone(milestoneId);
 
         milestone.setName(milestoneRegisterRequest.getName());
-        milestone.setStartDate(milestone.getStartDate());
-        milestone.setEndDate(milestone.getEndDate());
+        milestone.setStartDate(milestoneRegisterRequest.getStartDate());
+        milestone.setEndDate(milestoneRegisterRequest.getEndDate());
 
         return milestone.getId();
     }
 
 
     //마일스톤 삭제 DELETE /api/projects/{projectId}/milestones/{milestoneId}
+    @Override
+    @Transactional
     public Long deleteMilestone(Long projectId, Long milestoneId){
 
         Project project = getProject(projectId);

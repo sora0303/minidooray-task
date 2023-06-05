@@ -3,6 +3,8 @@ package com.nhn.sadari.minidooray.task.entity;
 import com.sun.istack.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
@@ -49,5 +52,14 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
+    @OneToMany(mappedBy = "task", orphanRemoval = true)
+    private List<Comment> comment;
+
+    @OneToMany(mappedBy = "task", orphanRemoval = true)
+    private List<TaskManager> taskManagers;
+
+    @OneToMany(mappedBy = "task", orphanRemoval = true)
+    private List<TaskTag> taskTags;
 
 }

@@ -2,6 +2,7 @@ package com.nhn.sadari.minidooray.task.service;
 
 import com.nhn.sadari.minidooray.task.domain.MilestoneRegisterRequest;
 import com.nhn.sadari.minidooray.task.domain.TagRegisterRequest;
+import com.nhn.sadari.minidooray.task.domain.TaskModifyRequest;
 import com.nhn.sadari.minidooray.task.domain.TaskRegisterRequest;
 import com.nhn.sadari.minidooray.task.entity.Milestone;
 import com.nhn.sadari.minidooray.task.entity.Project;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("taskService")
 @RequiredArgsConstructor
@@ -59,6 +61,9 @@ public class TaskServiceImpl implements TaskService{
         return tag;
     }
 
+    //업무 등록
+    @Override
+    @Transactional
     public Long createTask(Long projectId, TaskRegisterRequest taskRegisterRequest){
 
         Task task = new Task();
@@ -85,6 +90,7 @@ public class TaskServiceImpl implements TaskService{
             pk.setMemberId(memberId);
             pk.setTaskId(task.getId());
             taskManager.setPk(pk);
+            taskManager.setTask(task);
             taskManagerRepository.save(taskManager);
         }
 
@@ -98,11 +104,72 @@ public class TaskServiceImpl implements TaskService{
             pk.setTaskId(task.getId());
             pk.setTagId(tagId);
             taskTag.setPk(pk);
+            taskTag.setTask(task);
+            taskTag.setTag(tag);
             taskTagRepository.save(taskTag);
         }
 
         return task.getId();
     }
 
+    //업무 수정
+    @Override
+    @Transactional
+    public Long modifyTask(Long projectId, Long taskId, TaskModifyRequest taskModifyRequest){
 
+        Project project = getProject(projectId);
+
+        Task task = getTask(taskId);
+        task.setTitle(taskModifyRequest.getTitle());
+        task.setContent(taskModifyRequest.getContent());
+        task.setCreatedAt(LocalDateTime.now());
+        task.setEndDate(taskModifyRequest.getEndDate());
+
+        Milestone milestone = getMilestone(taskModifyRequest.getMilestoneId());
+        task.setMilestone(milestone);
+
+        taskRepository.save(task);
+
+        //해당 Task에 따른 TaskManager 수정
+        taskManagerRepository.deleteAllByPk_TaskId(taskId);
+        List<Long> memberIds = taskModifyRequest.getMemberIds();
+
+        for(Long memberId : memberIds) {
+            TaskManager taskManager = new TaskManager();
+            TaskManager.Pk pk = new TaskManager.Pk();
+            pk.setMemberId(memberId);
+            pk.setTaskId(task.getId());
+            taskManager.setPk(pk);
+            taskManager.setTask(task);
+            taskManagerRepository.save(taskManager);
+        }
+
+        //해당 Task에 따른 Tag 수정
+        taskTagRepository.deleteAllByPk_TaskId(taskId);
+        List<Long> tagIds = taskModifyRequest.getTagIds();
+
+        for(Long tagId : tagIds) {
+            Tag tag = getTag(tagId);
+            TaskTag taskTag = new TaskTag();
+            TaskTag.Pk pk = new TaskTag.Pk();
+            pk.setTaskId(task.getId());
+            pk.setTagId(tagId);
+            taskTag.setPk(pk);
+            taskTag.setTask(task);
+            taskTag.setTag(tag);
+            taskTagRepository.save(taskTag);
+        }
+
+        return task.getId();
+    }
+
+    //업무 삭제
+    @Override
+    @Transactional
+    public Long deleteTask(Long projectId, Long taskId){
+        Project project = getProject(projectId);
+        Task task = getTask(taskId);
+        taskRepository.delete(task);
+        return task.getId();
+    }
 }

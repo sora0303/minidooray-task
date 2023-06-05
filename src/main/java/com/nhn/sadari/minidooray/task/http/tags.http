@@ -19,7 +19,7 @@ Content-Type: application/json
 
 
 ### 태그 삭제
-DELETE /api/projects/1/tags/1
+DELETE /api/projects/1/tags/2
 Host: localhost:9090
 Content-Type: application/json
 

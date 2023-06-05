@@ -38,4 +38,13 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
     private List<ProjectMember> projectMember;
 
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    private List<Milestone> milestones;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    private List<Tag> tags;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    private List<Task> tasks;
+
 }

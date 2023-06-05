@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 public interface ProjectDto {
 
+    Long getId();
+
     String getName();
 
     String getDescription();

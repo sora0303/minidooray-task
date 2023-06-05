@@ -12,6 +12,9 @@ import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -138,4 +141,15 @@ public class ProjectRestController {
 
         return new ResponseEntity<>(projectDtos, HttpStatus.OK);
     }
+
+    //멤버 아이디로 프로젝트 리스트 조회 /api/projects/members/{memberId}
+//    @ResponseStatus(HttpStatus.OK)
+//    @GetMapping(value = "/members/{memberId}")
+//    public ResponseEntity<Page<ProjectDto>> getProjectsByMemberId(@PathVariable Long memberId) {
+//
+//        Page<ProjectDto> projectDtos = projectService.getProjectsByMemberId(memberId);
+//
+//        return new ResponseEntity<>(projectDtos, HttpStatus.OK);
+//    }
+
 }

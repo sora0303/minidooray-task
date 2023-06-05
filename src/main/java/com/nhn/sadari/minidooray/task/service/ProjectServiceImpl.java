@@ -17,6 +17,8 @@ import com.nhn.sadari.minidooray.task.repository.ProjectRepository;
 import com.nhn.sadari.minidooray.task.repository.ProjectStatusRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -153,8 +155,14 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     @Transactional
     public List<ProjectDto> getProjectsByMemberId(Long memberId){
-        return projectRepository.getProjectsByProjectMember_Pk_MemberId(memberId);
+        return projectRepository.getProjectsByProjectMember_Pk_MemberIdOrderById(memberId);
     }
+
+//    @Override
+//    @Transactional
+//    public Page<ProjectDto> getProjectsByMemberId(Pageable pageable, Long memberId){
+//        return projectRepository.getProjectsByProjectMember_Pk_MemberIdOrderById(pageable, memberId);
+//    }
 
 
     //프로젝트 아이디로 프로젝트 아이디로 조회 /api/projects/{projectId}

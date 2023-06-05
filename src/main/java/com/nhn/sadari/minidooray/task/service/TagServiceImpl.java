@@ -9,6 +9,7 @@ import com.nhn.sadari.minidooray.task.repository.ProjectRepository;
 import com.nhn.sadari.minidooray.task.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("tagService")
 @RequiredArgsConstructor
@@ -27,6 +28,8 @@ public class TagServiceImpl implements TagService {
     }
 
     //태그 등록 /api/projects/{projectId}/tags
+    @Override
+    @Transactional
     public Long createTag(Long projectId, TagRegisterRequest tagRegisterRequest){
 
         Project project = getProject(projectId);
@@ -43,6 +46,8 @@ public class TagServiceImpl implements TagService {
 
 
     //태그 수정 /api/projects/{projectId}/tags/{tagId}
+    @Override
+    @Transactional
     public Long modifyTag(Long projectId, Long tagId, TagRegisterRequest tagRegisterRequest){
 
         Project project = getProject(projectId);
@@ -56,6 +61,8 @@ public class TagServiceImpl implements TagService {
 
 
     //태그 삭제 DELETE /api/projects/{projectId}/tags/{tagId}
+    @Override
+    @Transactional
     public Long deleteTag(Long projectId, Long tagId){
 
         Project project = getProject(projectId);

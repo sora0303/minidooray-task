@@ -5,6 +5,9 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -20,6 +23,11 @@ public class TaskManager {
 
     @EmbeddedId
     private Pk pk;
+
+    @MapsId("taskId")
+    @ManyToOne
+    @JoinColumn(name = "task_id")
+    private Task task;
 
     @Column(name = "member_name")
     private String memberName;

@@ -3,6 +3,7 @@ package com.nhn.sadari.minidooray.task.entity;
 
 import com.sun.istack.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,10 @@ public class Comment {
 
     @Column(name = "create_at")
     @NotNull
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
+
+    @NotNull
+    private String contents;
 
     @ManyToOne
     @JoinColumn(name = "task_id")

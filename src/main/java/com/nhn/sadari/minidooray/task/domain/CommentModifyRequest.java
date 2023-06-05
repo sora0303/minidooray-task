@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommentModifyRequest {
 
     String contents;
-
-    @Builder
-    public CommentModifyRequest(){}
 
 }

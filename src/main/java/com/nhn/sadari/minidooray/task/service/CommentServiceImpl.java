@@ -18,48 +18,48 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service("commentService")
 @RequiredArgsConstructor
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final TaskRepository taskRepository;
 
-    private Comment getComment(Long commentId){
+    private Comment getComment(Long commentId) {
         return commentRepository.findById(commentId).orElseThrow(() -> new CommentNotFoundException(commentId));
     }
 
-    private Task getTask(Long taskId){
+    private Task getTask(Long taskId) {
         return taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException(taskId));
     }
 
     //댓글 등록 /api/tasks/{tasksId}/comments
 //    @Override
-//    @Transactional
-//    public Long createComment(Long taskId, CommentRegisterRequest commentRegisterRequest){
-//
-//        Task task = getTask(taskId);
-//        Comment comment = new Comment();
-//        comment.setWriterId(commentRegisterRequest.getWriterId());
-//        comment.setCreatedAt(LocalDateTime.now());
-//        comment.setTask(task);
-//
-//        commentRepository.save(comment);
-//        return comment.getId();
-//    }
-//
-//    //댓글 수정 /api/tasks/{tasksId}/comments/{commentId}
+    @Transactional
+    public Long createComment(Long taskId, CommentRegisterRequest commentRegisterRequest) {
+
+        Task task = getTask(taskId);
+        Comment comment = Comment.builder()
+            .writerId(commentRegisterRequest.getWriterId())
+            .createdAt(LocalDateTime.now())
+            .task(task).build();
+
+        commentRepository.save(comment);
+        return comment.getId();
+    }
+
+    //댓글 수정 /api/tasks/{tasksId}/comments/{commentId}
 //    @Override
 //    @Transactional
-//    public Long modifyComment(Long taskId, Long commentId, CommentModifyRequest commentModifyRequest){
+//    public Long modifyComment(Long taskId, Long commentId, CommentModifyRequest commentModifyRequest) {
 //
 //        Task task = getTask(taskId);
 //        Comment comment = getComment(commentId);
-//        comment.setCreatedAt(LocalDateTime.now());
-//        comment.setTask(task);
+//        comment.modifyComment(commentModifyRequest);
 //
-//        commentRepository.save(comment);
 //        return comment.getId();
 //    }
 
     //댓글 삭제 /api/tasks/{tasksId}/comments/{commentId}
+
+
 
 }

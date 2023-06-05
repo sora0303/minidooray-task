@@ -32,14 +32,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     //댓글 등록 /api/tasks/{tasksId}/comments
-//    @Override
+    @Override
     @Transactional
     public Long createComment(Long taskId, CommentRegisterRequest commentRegisterRequest) {
 
         Task task = getTask(taskId);
         Comment comment = Comment.builder()
             .writerId(commentRegisterRequest.getWriterId())
-            .createdAt(LocalDateTime.now())
+            .contents(commentRegisterRequest.getContents())
             .task(task).build();
 
         commentRepository.save(comment);
@@ -47,19 +47,27 @@ public class CommentServiceImpl implements CommentService {
     }
 
     //댓글 수정 /api/tasks/{tasksId}/comments/{commentId}
-//    @Override
-//    @Transactional
-//    public Long modifyComment(Long taskId, Long commentId, CommentModifyRequest commentModifyRequest) {
-//
-//        Task task = getTask(taskId);
-//        Comment comment = getComment(commentId);
-//        comment.modifyComment(commentModifyRequest);
-//
-//        return comment.getId();
-//    }
+    @Override
+    @Transactional
+    public Long modifyComment(Long taskId, Long commentId, CommentModifyRequest commentModifyRequest) {
+
+        Task task = getTask(taskId);
+        Comment comment = getComment(commentId);
+        comment.modifyComment(commentModifyRequest);
+
+        return comment.getId();
+    }
 
     //댓글 삭제 /api/tasks/{tasksId}/comments/{commentId}
+    @Override
+    @Transactional
+    public Long deleteComment(Long taskId, Long commentId){
+        Task task = getTask(taskId);
+        Comment comment = getComment(commentId);
 
+        commentRepository.delete(comment);
+        return comment.getId();
+    }
 
 
 }

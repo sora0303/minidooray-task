@@ -6,13 +6,18 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Builder
+
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class CommentRegisterRequest {
 
     Long writerId;
 
     String contents;
+
+    @Builder
+    public CommentRegisterRequest(Long writerId, String contents) {
+        this.writerId = writerId;
+        this.contents = contents;
+    }
 }

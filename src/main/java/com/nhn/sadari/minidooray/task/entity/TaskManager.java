@@ -29,9 +29,6 @@ public class TaskManager {
     @JoinColumn(name = "task_id")
     private Task task;
 
-    @Column(name = "member_name")
-    private String memberName;
-
     @NoArgsConstructor
     @AllArgsConstructor
     @Embeddable

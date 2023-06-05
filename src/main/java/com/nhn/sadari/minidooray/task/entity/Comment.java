@@ -45,14 +45,15 @@ public class Comment {
     private Task task;
 
     @Builder
-    public Comment(Long writerId, LocalDateTime createdAt, String contents, Task task) {
+    public Comment(Long writerId, String contents, Task task) {
         this.writerId = writerId;
-        this.createdAt = createdAt;
+        this.createdAt = LocalDateTime.now();
         this.contents = contents;
         this.task = task;
     }
 
     public void modifyComment(CommentModifyRequest commentModifyRequest) {
         this.contents = commentModifyRequest.getContents();
+        this.createdAt = LocalDateTime.now();
     }
 }

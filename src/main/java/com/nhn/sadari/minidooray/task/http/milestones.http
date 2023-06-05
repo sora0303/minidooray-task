@@ -1,11 +1,11 @@
 ### 마일스톤 등록
-POST /api/projects/4/milestones
+POST /api/projects/1/milestones
 Host: localhost:9090
 Content-Type: application/json
 
 {
-  "name": "마일스톤1",
-  "startDate": "2023-04-28T00:00:00",
+  "name": "마일스톤4",
+  "startDate": "2023-04-28",
   "endDate": "2023-06-01"
 }
 

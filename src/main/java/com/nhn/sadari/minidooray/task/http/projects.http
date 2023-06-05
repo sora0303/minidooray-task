@@ -4,7 +4,7 @@ Host: localhost:9090
 Content-Type: application/json
 
 {
-  "name": "프로젝트 이름",
+  "name": "프로젝트 5",
   "description": "프로젝트 설명",
   "memberId": 1,
   "memberName": "홍길동"
@@ -12,19 +12,19 @@ Content-Type: application/json
 
 
 ### 프로젝트 수정 (기본설정)
-PUT /api/projects/1
+PUT /api/projects/2
 Host: localhost:9090
 Content-Type: application/json
 
 {
   "status": "휴면",
-  "name": "프로젝트 이름 수정",
-  "description": "프로젝트 설명 수정"
+  "name": "프로젝트 2 수정",
+  "description": "프로젝트 설명 2 수정"
 }
 
 
 ### 프로젝트 삭제
-DELETE /api/projects/1
+DELETE /api/projects/8
 Host: localhost:9090
 Content-Type: application/json
 
@@ -35,8 +35,8 @@ Host: localhost:9090
 Content-Type: application/json
 
 {
-  "memberId": 2,
-  "memberName": "김조원",
+  "memberId": 4,
+  "memberName": "라라라",
   "role": "멤버"
 }
 

@@ -4,13 +4,13 @@ Host: localhost:9090
 Content-Type: application/json
 
 {
-  "title": "미니두레이 ERD 설계",
-  "content": "ERD 설계 열심히 하기",
+  "title": "미니두레이 ERD 설계2",
+  "content": "ERD 설계 열심히 하기2",
   "writerId": 1,
   "endDate": "2023-06-01",
-  "memberIds": [1, 2],
+  "memberIds": [3],
   "milestoneId": 2,
-  "tagIds": [2, 3]
+  "tagIds": [1, 3]
 }
 
 ### 업무 수정
@@ -28,6 +28,6 @@ Content-Type: application/json
 }
 
 ### 업무 삭제
-DELETE /api/projects/1/tasks/1
+DELETE /api/projects/8/tasks/8
 Host: localhost:9090
 Content-Type: application/json

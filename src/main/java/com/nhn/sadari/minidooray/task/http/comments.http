@@ -1,23 +1,23 @@
 ### 댓글 등록
-POST /api/projects/{projectId}/tasks/{tasksId}/comments
-Host: localhost:8080
+POST /api/tasks/1/comments
+Host: localhost:9090
 Content-Type: application/json
 
 {
   "writerId": 1,
-  "contents": ""
+  "contents": "코멘트를 달아보았다2"
 }
 
 ### 댓글 수정
-PUT /api/projects/{projectId}/tasks/{tasksId}/comments/{commentId}
-Host: localhost:8080
+PUT /api/tasks/8/comments/2
+Host: localhost:9090
 Content-Type: application/json
 
 {
-  "contents": ""
+  "contents": "코멘트를 수정해보았다"
 }
 
 ### 댓글 삭제
-DELETE /api/projects/{projectId}/tasks/{tasksId}/comments/{commentId}
-Host: localhost:8080
+DELETE /api/tasks/8/comments/1
+Host: localhost:9090
 Content-Type: application/json

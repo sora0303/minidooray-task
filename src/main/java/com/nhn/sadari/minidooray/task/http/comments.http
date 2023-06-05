@@ -5,11 +5,11 @@ Content-Type: application/json
 
 {
   "writerId": 1,
-  "contents": "코멘트를 달아보았다2"
+  "contents": "코멘트를 달아보았다3"
 }
 
 ### 댓글 수정
-PUT /api/tasks/8/comments/2
+PUT /api/tasks/1/comments/2
 Host: localhost:9090
 Content-Type: application/json
 

@@ -36,7 +36,7 @@ Content-Type: application/json
 
 {
   "memberId": 4,
-  "memberName": "라라라",
+  "memberName": "요요요",
   "role": "멤버"
 }
 

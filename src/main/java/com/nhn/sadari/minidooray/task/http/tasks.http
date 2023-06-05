@@ -8,9 +8,9 @@ Content-Type: application/json
   "content": "ERD 설계 열심히 하기2",
   "writerId": 1,
   "endDate": "2023-06-01",
-  "memberIds": [3],
-  "milestoneId": 2,
-  "tagIds": [1, 3]
+  "memberIds": [1, 2],
+  "milestoneId": 1,
+  "tagIds": [2, 3]
 }
 
 ### 업무 수정

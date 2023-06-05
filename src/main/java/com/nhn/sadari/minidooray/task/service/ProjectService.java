@@ -7,6 +7,7 @@ import com.nhn.sadari.minidooray.task.domain.ProjectModifyRequest;
 import com.nhn.sadari.minidooray.task.domain.ProjectRegisterRequest;
 import com.nhn.sadari.minidooray.task.entity.Project;
 import com.nhn.sadari.minidooray.task.entity.ProjectMember;
+import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface ProjectService {
@@ -23,5 +24,6 @@ public interface ProjectService {
 
     Long deleteProjectMember(Long projectId, Long memberId);
 
-    ProjectDto getProjectById(Long projectId);
+    List<ProjectDto> getProjectsByMemberId(Long memberId);
+    ProjectDto getProjectByProjectId(Long projectId);
 }

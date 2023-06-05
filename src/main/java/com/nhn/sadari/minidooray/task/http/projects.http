@@ -80,12 +80,12 @@ Content-Type: application/json
 
 ### 프로젝트 리스트 조회
 GET /api/projects/members/{memberId}
-Host: localhost:8080
+Host: localhost:9090
 Content-Type: application/json
 
 ### 프로젝트 아이디로 조회
 GET /api/projects/{projectId}
-Host: localhost:8080
+Host: localhost:9090
 Content-Type: application/json
 
 

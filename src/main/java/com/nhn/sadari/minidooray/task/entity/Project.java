@@ -1,6 +1,8 @@
 package com.nhn.sadari.minidooray.task.entity;
 
 import com.sun.istack.NotNull;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,5 +34,8 @@ public class Project {
     @ManyToOne
     @JoinColumn(name = "project_status_id")
     private ProjectStatus projectStatus;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    private List<ProjectMember> projectMember;
 
 }

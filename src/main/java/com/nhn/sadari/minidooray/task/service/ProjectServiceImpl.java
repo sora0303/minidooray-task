@@ -15,6 +15,7 @@ import com.nhn.sadari.minidooray.task.exception.ProjectNotFoundException;
 import com.nhn.sadari.minidooray.task.repository.ProjectMemberRepository;
 import com.nhn.sadari.minidooray.task.repository.ProjectRepository;
 import com.nhn.sadari.minidooray.task.repository.ProjectStatusRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -149,12 +150,17 @@ public class ProjectServiceImpl implements ProjectService{
 
 
     //프로젝트 리스트 조회 /api/projects/members/{memberId}
+    @Override
+    @Transactional
+    public List<ProjectDto> getProjectsByMemberId(Long memberId){
+        return projectRepository.getProjectsByProjectMember_Pk_MemberId(memberId);
+    }
 
 
     //프로젝트 아이디로 조회 /api/projects/{projectId}
     @Override
     @Transactional
-    public ProjectDto getProjectById(Long projectId){
+    public ProjectDto getProjectByProjectId(Long projectId){
         return projectRepository.getProjectById(projectId);
     }
 

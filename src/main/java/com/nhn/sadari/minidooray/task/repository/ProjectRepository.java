@@ -8,4 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     ProjectDto getProjectById(Long projectId);
+
+    List<ProjectDto> getProjectsByProjectMember_Pk_MemberId(Long memberId);
+
 }

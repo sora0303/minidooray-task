@@ -8,6 +8,7 @@ import com.nhn.sadari.minidooray.task.domain.ProjectRegisterRequest;
 import com.nhn.sadari.minidooray.task.domain.IdResponse;
 import com.nhn.sadari.minidooray.task.exception.ValidationFailedException;
 import com.nhn.sadari.minidooray.task.service.ProjectService;
+import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -120,11 +121,21 @@ public class ProjectRestController {
 
     //프로젝트 조회 /api/projects/{projectId}
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/projects/{projectId}")
-    public ResponseEntity<ProjectDto> getProjectById(@PathVariable("projectId") Long projectId) {
+    @GetMapping(value = "/{projectId}")
+    public ResponseEntity<ProjectDto> getProjectByProjectId(@PathVariable("projectId") Long projectId) {
 
-        ProjectDto projectDto = projectService.getProjectById(projectId);
+        ProjectDto projectDto = projectService.getProjectByProjectId(projectId);
 
         return new ResponseEntity<>(projectDto, HttpStatus.OK);
+    }
+
+    //멤버 아이디로 프로젝트 리스트 조회 /api/projects/members/{memberId}
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/members/{memberId}")
+    public ResponseEntity<List<ProjectDto>> getProjectsByMemberId(@PathVariable Long memberId) {
+
+        List<ProjectDto> projectDtos = projectService.getProjectsByMemberId(memberId);
+
+        return new ResponseEntity<>(projectDtos, HttpStatus.OK);
     }
 }

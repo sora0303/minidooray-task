@@ -3,6 +3,7 @@ package com.nhn.sadari.minidooray.task.entity;
 import com.sun.istack.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

@@ -1,6 +1,7 @@
 package com.nhn.sadari.minidooray.task.domain;
 
 import com.nhn.sadari.minidooray.task.entity.Comment;
+import com.sun.istack.NotNull;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentModifyRequest {
 
+    @NotNull
     String contents;
 
     @Builder

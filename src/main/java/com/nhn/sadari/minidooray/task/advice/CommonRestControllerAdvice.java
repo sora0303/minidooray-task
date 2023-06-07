@@ -39,7 +39,7 @@ public class CommonRestControllerAdvice {
 
     //404 Not Found
     @ExceptionHandler({NoHandlerFoundException.class, ProjectNotFoundException.class, TagNotFoundException.class,
-        ProjectMemberNotFoundException.class, MilestoneNotFoundException.class, TaskNotFoundException.class})
+            ProjectMemberNotFoundException.class, MilestoneNotFoundException.class, TaskNotFoundException.class})
     public ResponseEntity<ErrorMessage> eventNotFoundException(Exception exception) {
         ErrorMessage errorMessage = new ErrorMessage(HttpStatus.NOT_FOUND.value(), exception.getMessage());
         return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
@@ -57,7 +57,7 @@ public class CommonRestControllerAdvice {
     //500 Internal Server Error
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> internalServerError(Exception exception) {
-        log.info("error : {}", exception);
+        log.error("error : {}", exception);
         ErrorMessage errorMessage = new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage());
         return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
     }

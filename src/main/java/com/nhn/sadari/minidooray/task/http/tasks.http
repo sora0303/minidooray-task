@@ -13,8 +13,19 @@ Content-Type: application/json
   "tagIds": [2, 3]
 }
 
+### 업무 등록
+POST /api/projects/1/tasks
+Host: localhost:9090
+Content-Type: application/json
+
+{
+  "title": "미니두레이 ERD 설계2",
+  "content": "ERD 설계 열심히 하기2",
+  "writerId": 1
+}
+
 ### 업무 수정
-PUT /api/projects/1/tasks/2
+PUT /api/projects/1/tasks/3
 Host: localhost:9090
 Content-Type: application/json
 
@@ -25,6 +36,17 @@ Content-Type: application/json
   "memberIds": [1, 2],
   "milestoneId": 2,
   "tagIds": [4]
+}
+
+### 업무 수정
+PUT /api/projects/1/tasks/3
+Host: localhost:9090
+Content-Type: application/json
+
+{
+  "title": "미니두레이 ERD 설계 수정",
+  "content": "ERD 설계 열심히 하기 수정",
+  "endDate": "2023-06-10"
 }
 
 ### 업무 삭제

@@ -22,8 +22,6 @@ public class TaskRegisterRequest {
     @NotNull
     Long writerId;
 
-    @NotNull
-    LocalDateTime createdAt;
 
     LocalDate endDate;
     Long milestoneId;

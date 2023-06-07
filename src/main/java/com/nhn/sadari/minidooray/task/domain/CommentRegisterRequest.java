@@ -1,5 +1,6 @@
 package com.nhn.sadari.minidooray.task.domain;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentRegisterRequest {
 
+    @NotNull
     Long writerId;
 
+    @NotNull
     String contents;
 
     @Builder

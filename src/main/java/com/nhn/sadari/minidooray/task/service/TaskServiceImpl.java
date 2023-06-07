@@ -22,13 +22,15 @@ import com.nhn.sadari.minidooray.task.repository.TaskRepository;
 import com.nhn.sadari.minidooray.task.repository.TaskTagRepository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service("taskService")
 @RequiredArgsConstructor
-public class TaskServiceImpl implements TaskService{
+public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
     private final ProjectRepository projectRepository;
@@ -42,21 +44,22 @@ public class TaskServiceImpl implements TaskService{
     private final TaskManagerRepository taskManagerRepository;
 
 
-    private Task getTask(long taskId){
+    private Task getTask(long taskId) {
         return taskRepository.findById(taskId).orElseThrow(() -> new TaskNotFoundException(taskId));
     }
 
-    private Project getProject(long projectId){
+    private Project getProject(long projectId) {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException(projectId));
         return project;
     }
 
-    private Milestone getMilestone(long milestoneId){
-        Milestone milestone = milestoneRepository.findById(milestoneId).orElseThrow(() -> new MilestoneNotFoundException(milestoneId));
+    private Milestone getMilestone(long milestoneId) {
+        Milestone milestone =
+            milestoneRepository.findById(milestoneId).orElseThrow(() -> new MilestoneNotFoundException(milestoneId));
         return milestone;
     }
 
-    private Tag getTag(long tagId){
+    private Tag getTag(long tagId) {
         Tag tag = tagRepository.findById(tagId).orElseThrow(() -> new TagNotFoundException(tagId));
         return tag;
     }
@@ -64,7 +67,7 @@ public class TaskServiceImpl implements TaskService{
     //업무 등록
     @Override
     @Transactional
-    public Long createTask(Long projectId, TaskRegisterRequest taskRegisterRequest){
+    public Long createTask(Long projectId, TaskRegisterRequest taskRegisterRequest) {
 
         Task task = new Task();
         task.setTitle(taskRegisterRequest.getTitle());
@@ -76,37 +79,44 @@ public class TaskServiceImpl implements TaskService{
         Project project = getProject(projectId);
         task.setProject(project);
 
-        Milestone milestone = getMilestone(taskRegisterRequest.getMilestoneId());
-        task.setMilestone(milestone);
+        if (Objects.nonNull(taskRegisterRequest.getMilestoneId())) {
+            Milestone milestone = getMilestone(taskRegisterRequest.getMilestoneId());
+            task.setMilestone(milestone);
+        }
 
         taskRepository.save(task);
 
         //해당 Task에 따른 TaskManager 등록
-        List<Long> memberIds = taskRegisterRequest.getMemberIds();
 
-        for(Long memberId : memberIds) {
-            TaskManager taskManager = new TaskManager();
-            TaskManager.Pk pk = new TaskManager.Pk();
-            pk.setMemberId(memberId);
-            pk.setTaskId(task.getId());
-            taskManager.setPk(pk);
-            taskManager.setTask(task);
-            taskManagerRepository.save(taskManager);
+        if (Objects.nonNull(taskRegisterRequest.getMemberIds())) {
+            List<Long> memberIds = taskRegisterRequest.getMemberIds();
+            for (Long memberId : memberIds) {
+                TaskManager taskManager = new TaskManager();
+                TaskManager.Pk pk = new TaskManager.Pk();
+                pk.setMemberId(memberId);
+                pk.setTaskId(task.getId());
+                taskManager.setPk(pk);
+                taskManager.setTask(task);
+                taskManagerRepository.save(taskManager);
+            }
         }
 
-        //해당 Task에 따른 Tag 등록
-        List<Long> tagIds = taskRegisterRequest.getTagIds();
 
-        for(Long tagId : tagIds) {
-            Tag tag = getTag(tagId);
-            TaskTag taskTag = new TaskTag();
-            TaskTag.Pk pk = new TaskTag.Pk();
-            pk.setTaskId(task.getId());
-            pk.setTagId(tagId);
-            taskTag.setPk(pk);
-            taskTag.setTask(task);
-            taskTag.setTag(tag);
-            taskTagRepository.save(taskTag);
+        //해당 Task에 따른 Tag 등록
+
+        if (Objects.nonNull(taskRegisterRequest.getTagIds())) {
+            List<Long> tagIds = taskRegisterRequest.getTagIds();
+            for (Long tagId : tagIds) {
+                Tag tag = getTag(tagId);
+                TaskTag taskTag = new TaskTag();
+                TaskTag.Pk pk = new TaskTag.Pk();
+                pk.setTaskId(task.getId());
+                pk.setTagId(tagId);
+                taskTag.setPk(pk);
+                taskTag.setTask(task);
+                taskTag.setTag(tag);
+                taskTagRepository.save(taskTag);
+            }
         }
 
         return task.getId();
@@ -115,7 +125,7 @@ public class TaskServiceImpl implements TaskService{
     //업무 수정
     @Override
     @Transactional
-    public Long modifyTask(Long projectId, Long taskId, TaskModifyRequest taskModifyRequest){
+    public Long modifyTask(Long projectId, Long taskId, TaskModifyRequest taskModifyRequest) {
 
         Project project = getProject(projectId);
 
@@ -125,39 +135,45 @@ public class TaskServiceImpl implements TaskService{
         task.setCreatedAt(LocalDateTime.now());
         task.setEndDate(taskModifyRequest.getEndDate());
 
-        Milestone milestone = getMilestone(taskModifyRequest.getMilestoneId());
-        task.setMilestone(milestone);
+        if (Objects.nonNull(taskModifyRequest.getMilestoneId())) {
+            Milestone milestone = getMilestone(taskModifyRequest.getMilestoneId());
+            task.setMilestone(milestone);
+        }
 
         taskRepository.save(task);
 
         //해당 Task에 따른 TaskManager 수정
         taskManagerRepository.deleteAllByPk_TaskId(taskId);
-        List<Long> memberIds = taskModifyRequest.getMemberIds();
 
-        for(Long memberId : memberIds) {
-            TaskManager taskManager = new TaskManager();
-            TaskManager.Pk pk = new TaskManager.Pk();
-            pk.setMemberId(memberId);
-            pk.setTaskId(task.getId());
-            taskManager.setPk(pk);
-            taskManager.setTask(task);
-            taskManagerRepository.save(taskManager);
+        if (Objects.nonNull(taskModifyRequest.getMemberIds())) {
+            List<Long> memberIds = taskModifyRequest.getMemberIds();
+            for (Long memberId : memberIds) {
+                TaskManager taskManager = new TaskManager();
+                TaskManager.Pk pk = new TaskManager.Pk();
+                pk.setMemberId(memberId);
+                pk.setTaskId(task.getId());
+                taskManager.setPk(pk);
+                taskManager.setTask(task);
+                taskManagerRepository.save(taskManager);
+            }
         }
 
         //해당 Task에 따른 Tag 수정
         taskTagRepository.deleteAllByPk_TaskId(taskId);
-        List<Long> tagIds = taskModifyRequest.getTagIds();
 
-        for(Long tagId : tagIds) {
-            Tag tag = getTag(tagId);
-            TaskTag taskTag = new TaskTag();
-            TaskTag.Pk pk = new TaskTag.Pk();
-            pk.setTaskId(task.getId());
-            pk.setTagId(tagId);
-            taskTag.setPk(pk);
-            taskTag.setTask(task);
-            taskTag.setTag(tag);
-            taskTagRepository.save(taskTag);
+        if (Objects.nonNull(taskModifyRequest.getTagIds())) {
+            List<Long> tagIds = taskModifyRequest.getTagIds();
+            for (Long tagId : tagIds) {
+                Tag tag = getTag(tagId);
+                TaskTag taskTag = new TaskTag();
+                TaskTag.Pk pk = new TaskTag.Pk();
+                pk.setTaskId(task.getId());
+                pk.setTagId(tagId);
+                taskTag.setPk(pk);
+                taskTag.setTask(task);
+                taskTag.setTag(tag);
+                taskTagRepository.save(taskTag);
+            }
         }
 
         return task.getId();
@@ -166,7 +182,7 @@ public class TaskServiceImpl implements TaskService{
     //업무 삭제
     @Override
     @Transactional
-    public Long deleteTask(Long projectId, Long taskId){
+    public Long deleteTask(Long projectId, Long taskId) {
         Project project = getProject(projectId);
         Task task = getTask(taskId);
         taskRepository.delete(task);

@@ -19,8 +19,6 @@ public class TaskModifyRequest {
     @NotNull
     String content;
 
-    @NotNull
-    LocalDateTime createdAt;
 
     LocalDate endDate;
     Long milestoneId;

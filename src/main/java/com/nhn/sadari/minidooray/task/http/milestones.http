@@ -9,6 +9,15 @@ Content-Type: application/json
   "endDate": "2023-06-01"
 }
 
+### 마일스톤 등록
+POST /api/projects/1/milestones
+Host: localhost:9090
+Content-Type: application/json
+
+{
+  "name": "마일스톤6"
+}
+
 ### 마일스톤 수정
 PUT /api/projects/1/milestones/2
 Host: localhost:9090

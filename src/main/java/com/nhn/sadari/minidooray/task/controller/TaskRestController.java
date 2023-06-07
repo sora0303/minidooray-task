@@ -2,7 +2,6 @@ package com.nhn.sadari.minidooray.task.controller;
 
 
 import com.nhn.sadari.minidooray.task.domain.IdResponse;
-import com.nhn.sadari.minidooray.task.domain.TagRegisterRequest;
 import com.nhn.sadari.minidooray.task.domain.TaskModifyRequest;
 import com.nhn.sadari.minidooray.task.domain.TaskRegisterRequest;
 import com.nhn.sadari.minidooray.task.exception.ValidationFailedException;

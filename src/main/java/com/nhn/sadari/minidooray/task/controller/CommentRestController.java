@@ -3,11 +3,14 @@ package com.nhn.sadari.minidooray.task.controller;
 
 import com.nhn.sadari.minidooray.task.domain.CommentModifyRequest;
 import com.nhn.sadari.minidooray.task.domain.CommentRegisterRequest;
+import com.nhn.sadari.minidooray.task.domain.CommonResponse;
 import com.nhn.sadari.minidooray.task.domain.IdResponse;
+import com.nhn.sadari.minidooray.task.domain.ProjectDto;
 import com.nhn.sadari.minidooray.task.domain.TagRegisterRequest;
 import com.nhn.sadari.minidooray.task.exception.ValidationFailedException;
 import com.nhn.sadari.minidooray.task.service.CommentService;
 import com.nhn.sadari.minidooray.task.service.TagService;
+import java.util.Collections;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +36,7 @@ public class CommentRestController {
 
     //댓글 등록 /api/tasks/{tasksId}/comments
     @PostMapping(value = "/{taskId}/comments")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<IdResponse> createComment(@PathVariable Long taskId,
+    public CommonResponse<IdResponse> createComment(@PathVariable Long taskId,
                                                     @RequestBody @Valid CommentRegisterRequest commentRegisterRequest,
                                                     BindingResult bindingResult) {
 
@@ -43,16 +45,23 @@ public class CommentRestController {
         }
 
         Long responseId = commentService.createComment(taskId, commentRegisterRequest);
-        IdResponse idResponse = new IdResponse(responseId);
 
-        return new ResponseEntity<>(idResponse, HttpStatus.CREATED);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(201)
+            .resultMessage("댓글 등록")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
     }
 
 
     //댓글 수정 /api/tasks/{tasksId}/comments/{commentId}
     @PutMapping(value = "/{taskId}/comments/{commentId}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<IdResponse> modifyComment(@PathVariable Long taskId, @PathVariable Long commentId, @RequestBody @Valid
+    public CommonResponse<IdResponse> modifyComment(@PathVariable Long taskId, @PathVariable Long commentId, @RequestBody @Valid
     CommentModifyRequest commentModifyRequest,
                                                     BindingResult bindingResult) {
 
@@ -61,19 +70,35 @@ public class CommentRestController {
         }
 
         Long responseId = commentService.modifyComment(taskId, commentId, commentModifyRequest);
-        IdResponse idResponse = new IdResponse(responseId);
 
-        return new ResponseEntity<>(idResponse, HttpStatus.OK);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(201)
+            .resultMessage("댓글 수정")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
     }
 
     //댓글 삭제 /api/tasks/{tasksId}/comments/{commentId}
     @DeleteMapping(value = "/{taskId}/comments/{commentId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<IdResponse> deleteComment(@PathVariable Long taskId, @PathVariable Long commentId) {
+    public CommonResponse<IdResponse> deleteComment(@PathVariable Long taskId, @PathVariable Long commentId) {
 
         Long responseId = commentService.deleteComment(taskId, commentId);
         IdResponse idResponse = new IdResponse(responseId);
 
-        return new ResponseEntity<>(idResponse, HttpStatus.OK);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("댓글 삭제")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
     }
 }

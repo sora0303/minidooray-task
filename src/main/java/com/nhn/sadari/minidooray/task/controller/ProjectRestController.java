@@ -210,22 +210,20 @@ public class ProjectRestController {
     //멤버 아이디로 프로젝트 리스트 조회 /api/projects/members/{memberId}
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/members/{memberId}")
-    public ResponseEntity<List<ProjectDto>> getProjectsByMemberId(@PathVariable Long memberId) {
+    public CommonResponse<ProjectDto> getProjectsByMemberId(@PathVariable Long memberId) {
 
         List<ProjectDto> projectDtos = projectService.getProjectsByMemberId(memberId);
 
         CommonResponse.Header header = CommonResponse.Header.builder()
             .isSuccessful(true)
             .resultCode(200)
-            .resultMessage("프로젝트 등록 성공")
+            .resultMessage("멤버 아이디로 프로젝트 리스트 조회")
             .build();
 
-//        return CommonResponse.<IdResponse>builder()
-//            .header(header)
-//            .result(Collections.singletonList(new IdResponse(responseId)))
-//            .build();
-
-        return new ResponseEntity<>(projectDtos, HttpStatus.OK);
+        return CommonResponse.<ProjectDto>builder()
+            .header(header)
+            .result(projectDtos)
+            .build();
     }
 
     //멤버 아이디로 프로젝트 리스트 조회 /api/projects/members/{memberId}

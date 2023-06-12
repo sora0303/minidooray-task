@@ -1,12 +1,14 @@
 package com.nhn.sadari.minidooray.task.controller;
 
 
+import com.nhn.sadari.minidooray.task.domain.CommonResponse;
 import com.nhn.sadari.minidooray.task.domain.IdResponse;
 import com.nhn.sadari.minidooray.task.domain.MilestoneRegisterRequest;
 import com.nhn.sadari.minidooray.task.domain.TagRegisterRequest;
 import com.nhn.sadari.minidooray.task.exception.ValidationFailedException;
 import com.nhn.sadari.minidooray.task.service.MilestoneService;
 import com.nhn.sadari.minidooray.task.service.TagService;
+import java.util.Collections;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,25 +34,31 @@ public class MilestoneRestController {
 
     //마일스톤 등록 /api/projects/{projectId}/milestones
     @PostMapping(value = "/{projectId}/milestones")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<IdResponse> createMilestone(@PathVariable Long projectId, @RequestBody @Valid MilestoneRegisterRequest milestoneRegisterRequest,
-                                                BindingResult bindingResult) {
+    public CommonResponse<IdResponse> createMilestone(@PathVariable Long projectId, @RequestBody @Valid MilestoneRegisterRequest milestoneRegisterRequest,
+                                                      BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);
         }
 
         Long responseId = milestoneService.createMilestone(projectId, milestoneRegisterRequest);
-        IdResponse idResponse = new IdResponse(responseId);
 
-        return new ResponseEntity<>(idResponse, HttpStatus.CREATED);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(201)
+            .resultMessage("마일스톤 등록 성공")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
     }
 
 
     //마일스톤 수정 /api/projects/{projectId}/milestones/{milestoneId}
     @PutMapping(value = "/{projectId}/milestones/{milestoneId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<IdResponse> modifyMilestone(@PathVariable Long projectId, @PathVariable Long milestoneId, @RequestBody @Valid MilestoneRegisterRequest milestoneRegisterRequest,
+    public CommonResponse<IdResponse> modifyMilestone(@PathVariable Long projectId, @PathVariable Long milestoneId, @RequestBody @Valid MilestoneRegisterRequest milestoneRegisterRequest,
                                                 BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -58,20 +66,35 @@ public class MilestoneRestController {
         }
 
         Long responseId = milestoneService.modifyMilestone(projectId, milestoneId, milestoneRegisterRequest);
-        IdResponse idResponse = new IdResponse(responseId);
 
-        return new ResponseEntity<>(idResponse, HttpStatus.OK);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("마일스톤 수정 성공")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
     }
 
 
     //마일스톤 삭제 DELETE /api/projects/{projectId}/milestones/{milestoneId}
     @DeleteMapping(value = "/{projectId}/milestones/{milestoneId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<IdResponse> deleteMilestone(@PathVariable Long projectId, @PathVariable Long milestoneId) {
+    public CommonResponse<IdResponse> deleteMilestone(@PathVariable Long projectId, @PathVariable Long milestoneId) {
 
         Long responseId = milestoneService.deleteMilestone(projectId, milestoneId);
-        IdResponse idResponse = new IdResponse(responseId);
 
-        return new ResponseEntity<>(idResponse, HttpStatus.OK);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("마일스톤 삭제 성공")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
     }
 }

@@ -1,11 +1,13 @@
 package com.nhn.sadari.minidooray.task.controller;
 
 
+import com.nhn.sadari.minidooray.task.domain.CommonResponse;
 import com.nhn.sadari.minidooray.task.domain.IdResponse;
 import com.nhn.sadari.minidooray.task.domain.TaskModifyRequest;
 import com.nhn.sadari.minidooray.task.domain.TaskRegisterRequest;
 import com.nhn.sadari.minidooray.task.exception.ValidationFailedException;
 import com.nhn.sadari.minidooray.task.service.TaskService;
+import java.util.Collections;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +33,7 @@ public class TaskRestController {
 
     //업무등록 /api/projects/{projectId}/tasks
     @PostMapping(value = "/{projectId}/tasks")
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<IdResponse> createTask(@PathVariable Long projectId, @RequestBody
+    public CommonResponse<IdResponse> createTask(@PathVariable Long projectId, @RequestBody
     @Valid TaskRegisterRequest taskRegisterRequest, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -40,16 +41,24 @@ public class TaskRestController {
         }
 
         Long responseId = taskService.createTask(projectId, taskRegisterRequest);
-        IdResponse idResponse = new IdResponse(responseId);
 
-        return new ResponseEntity<>(idResponse, HttpStatus.CREATED);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(201)
+            .resultMessage("업무 등록 성공")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
     }
 
 
     //업무수정 /api/projects/{projectId}/tasks/{taskId}
     @PutMapping (value = "/{projectId}/tasks/{taskId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<IdResponse> modifyTask(@PathVariable Long projectId, @PathVariable Long taskId, @RequestBody
+    public CommonResponse<IdResponse> modifyTask(@PathVariable Long projectId, @PathVariable Long taskId, @RequestBody
     @Valid TaskModifyRequest taskModifyRequest, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -57,20 +66,36 @@ public class TaskRestController {
         }
 
         Long responseId = taskService.modifyTask(projectId, taskId, taskModifyRequest);
-        IdResponse idResponse = new IdResponse(responseId);
 
-        return new ResponseEntity<>(idResponse, HttpStatus.OK);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("업무 수정 성공")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
     }
 
 
     //업무삭제 /api/projects/{projectId}/tasks/{taskId}
     @DeleteMapping(value = "/{projectId}/tasks/{taskId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<IdResponse> deleteTask(@PathVariable Long projectId, @PathVariable Long taskId) {
+    public CommonResponse<IdResponse> deleteTask(@PathVariable Long projectId, @PathVariable Long taskId) {
 
         Long responseId = taskService.deleteTask(projectId, taskId);
-        IdResponse idResponse = new IdResponse(responseId);
 
-        return new ResponseEntity<>(idResponse, HttpStatus.OK);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("업무 삭제 성공")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
     }
 }

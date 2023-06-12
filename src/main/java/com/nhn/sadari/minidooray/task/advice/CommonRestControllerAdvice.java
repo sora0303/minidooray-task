@@ -12,7 +12,6 @@ import com.nhn.sadari.minidooray.task.exception.ValidationFailedException;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -44,7 +43,6 @@ public class CommonRestControllerAdvice {
 
         return CommonResponse.<Void>builder()
             .header(header)
-            .result(null)
             .build();
     }
 
@@ -61,7 +59,6 @@ public class CommonRestControllerAdvice {
 
         return CommonResponse.<Void>builder()
             .header(header)
-            .result(null)
             .build();
     }
 
@@ -77,7 +74,6 @@ public class CommonRestControllerAdvice {
 
         return CommonResponse.<Void>builder()
             .header(header)
-            .result(null)
             .build();
     }
 
@@ -94,7 +90,6 @@ public class CommonRestControllerAdvice {
 
         return CommonResponse.<Void>builder()
             .header(header)
-            .result(null)
             .build();
     }
 

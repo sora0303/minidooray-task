@@ -17,6 +17,4 @@ public class ProjectMemberRegisterRequest {
     @NotNull
     String memberName;
 
-    @NotNull
-    ProjectMemberRoleType role;
 }

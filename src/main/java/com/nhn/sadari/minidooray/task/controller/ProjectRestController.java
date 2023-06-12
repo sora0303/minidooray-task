@@ -3,6 +3,7 @@ package com.nhn.sadari.minidooray.task.controller;
 import com.fasterxml.classmate.AnnotationOverrides;
 import com.nhn.sadari.minidooray.task.domain.CommonResponse;
 import com.nhn.sadari.minidooray.task.domain.ProjectDto;
+import com.nhn.sadari.minidooray.task.domain.ProjectMemberDto;
 import com.nhn.sadari.minidooray.task.domain.ProjectMemberModifyRequest;
 import com.nhn.sadari.minidooray.task.domain.ProjectMemberRegisterRequest;
 import com.nhn.sadari.minidooray.task.domain.ProjectModifyRequest;
@@ -235,5 +236,24 @@ public class ProjectRestController {
 //
 //        return new ResponseEntity<>(projectDtos, HttpStatus.OK);
 //    }
+
+
+    //프로젝트 아이디로 프로젝트 멤버 조회 /api/projects/{projectId}/members
+    @GetMapping(value = "/{projectId}/members")
+    public CommonResponse<ProjectMemberDto> getProjectMembersByProjectId(@PathVariable Long projectId) {
+
+        List<ProjectMemberDto> projectMemberDtos = projectService.getProjectMembersByProjectId(projectId);
+
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("프로젝트 아이디로 멤버리스트 조회")
+            .build();
+
+        return CommonResponse.<ProjectMemberDto>builder()
+            .header(header)
+            .result(projectMemberDtos)
+            .build();
+    }
 
 }

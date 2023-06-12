@@ -29,9 +29,10 @@ Content-Type: application/json
 
 {
   "memberId": 4,
-  "memberName": "요요요",
-  "role": "멤버"
+  "memberName": "요요요"
 }
+
+
 
 
 ### 프로젝트 멤버 역할 수정
@@ -57,5 +58,10 @@ Content-Type: application/json
 
 ### 프로젝트 아이디로 프로젝트 조회
 GET /api/projects/1
+Host: localhost:9090
+Content-Type: application/json
+
+### 프로젝트 아이디로 프로젝트 멤버 조회
+GET /api/projects/8/members
 Host: localhost:9090
 Content-Type: application/json

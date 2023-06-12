@@ -1,6 +1,7 @@
 package com.nhn.sadari.minidooray.task.service;
 
 import com.nhn.sadari.minidooray.task.domain.ProjectDto;
+import com.nhn.sadari.minidooray.task.domain.ProjectMemberDto;
 import com.nhn.sadari.minidooray.task.domain.ProjectMemberModifyRequest;
 import com.nhn.sadari.minidooray.task.domain.ProjectMemberRegisterRequest;
 import com.nhn.sadari.minidooray.task.domain.ProjectModifyRequest;
@@ -29,4 +30,6 @@ public interface ProjectService {
     List<ProjectDto> getProjectsByMemberId(Long memberId);
 //    Page<ProjectDto> getProjectsByMemberId(Pageable pageable, Long memberId);
     ProjectDto getProjectByProjectId(Long projectId);
+
+    List<ProjectMemberDto> getProjectMembersByProjectId(Long projectId);
 }

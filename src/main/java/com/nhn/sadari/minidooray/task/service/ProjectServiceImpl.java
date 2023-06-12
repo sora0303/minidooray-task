@@ -1,6 +1,7 @@
 package com.nhn.sadari.minidooray.task.service;
 
 import com.nhn.sadari.minidooray.task.domain.ProjectDto;
+import com.nhn.sadari.minidooray.task.domain.ProjectMemberDto;
 import com.nhn.sadari.minidooray.task.domain.ProjectMemberModifyRequest;
 import com.nhn.sadari.minidooray.task.domain.ProjectMemberRegisterRequest;
 import com.nhn.sadari.minidooray.task.domain.ProjectModifyRequest;
@@ -115,7 +116,7 @@ public class ProjectServiceImpl implements ProjectService{
         projectMember.setPk(pk);
         projectMember.setProject(project);
         projectMember.setMemberName(projectMemberRegisterRequest.getMemberName());
-        projectMember.setRole(projectMemberRegisterRequest.getRole());
+        projectMember.setRole(ProjectMemberRoleType.멤버);
 
         projectMemberRepository.save(projectMember);
 
@@ -171,6 +172,13 @@ public class ProjectServiceImpl implements ProjectService{
     public ProjectDto getProjectByProjectId(Long projectId){
         Project project = getProject(projectId);
         return projectRepository.getProjectById(projectId);
+    }
+
+    //프로젝트 아이디로 프로젝트 멤버 조회 /api/projects/{projectId}/members
+    @Override
+    public List<ProjectMemberDto> getProjectMembersByProjectId(Long projectId){
+        Project project = getProject(projectId);
+        return projectMemberRepository.getProjectMembersByPk_ProjectId(projectId);
     }
 
 

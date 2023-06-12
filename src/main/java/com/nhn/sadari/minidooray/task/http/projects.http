@@ -3,16 +3,9 @@ POST /api/projects
 Host: localhost:9090
 Content-Type: application/json
 
-{
-  "name": "프로젝트 5",
-  "description": "프로젝트 설명",
-  "memberId": 1,
-  "memberName": "홍길동"
-}
-
 
 ### 프로젝트 수정 (기본설정)
-PUT /api/projects/1
+PUT /api/projects/10
 Host: localhost:9090
 Content-Type: application/json
 

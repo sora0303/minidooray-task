@@ -1,5 +1,7 @@
 package com.nhn.sadari.minidooray.task.controller;
 
+import com.fasterxml.classmate.AnnotationOverrides;
+import com.nhn.sadari.minidooray.task.domain.CommonResponse;
 import com.nhn.sadari.minidooray.task.domain.ProjectDto;
 import com.nhn.sadari.minidooray.task.domain.ProjectMemberModifyRequest;
 import com.nhn.sadari.minidooray.task.domain.ProjectMemberRegisterRequest;
@@ -8,7 +10,9 @@ import com.nhn.sadari.minidooray.task.domain.ProjectRegisterRequest;
 import com.nhn.sadari.minidooray.task.domain.IdResponse;
 import com.nhn.sadari.minidooray.task.exception.ValidationFailedException;
 import com.nhn.sadari.minidooray.task.service.ProjectService;
+import java.util.Collections;
 import java.util.List;
+import javax.persistence.Id;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,24 +41,46 @@ public class ProjectRestController {
     private final ProjectService projectService;
 
     //프로젝트 등록 /api/projects
-    @ResponseStatus(HttpStatus.CREATED)
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @PostMapping(value = {"/", ""})
+//    public ResponseEntity<IdResponse> createProject(@RequestBody @Valid ProjectRegisterRequest projectRegisterRequest,
+//                                                    BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            throw new ValidationFailedException(bindingResult);
+//        }
+//
+//        Long responseId = projectService.createProject(projectRegisterRequest);
+//        IdResponse response = new IdResponse(responseId);
+//
+//        return new ResponseEntity<>(response, HttpStatus.CREATED);
+//    }
+
+
     @PostMapping(value = {"/", ""})
-    public ResponseEntity<IdResponse> createProject(@RequestBody @Valid ProjectRegisterRequest projectRegisterRequest,
+    public CommonResponse<IdResponse> createProject(@RequestBody @Valid ProjectRegisterRequest projectRegisterRequest,
                                                     BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new ValidationFailedException(bindingResult);
         }
 
         Long responseId = projectService.createProject(projectRegisterRequest);
-        IdResponse response = new IdResponse(responseId);
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(201)
+            .resultMessage("프로젝트 등록 성공")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
     }
 
+
     //프로젝트 수정 /api/projects/{projectId}
-    @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/{projectId}")
-    public ResponseEntity<IdResponse> modifyProject(@PathVariable("projectId") Long projectId,
+    public CommonResponse<IdResponse> modifyProject(@PathVariable("projectId") Long projectId,
                                                     @RequestBody @Valid ProjectModifyRequest projectModifyRequest,
                                                     BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -62,26 +88,41 @@ public class ProjectRestController {
         }
 
         Long responseId = projectService.modifyProject(projectId, projectModifyRequest);
-        IdResponse response = new IdResponse(responseId);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("프로젝트 수정 성공")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
     }
 
     //프로젝트 삭제 /api/projects/{projectId}
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = "/{projectId}")
-    public ResponseEntity<IdResponse> deleteProject(@PathVariable("projectId") Long projectId) {
+    public CommonResponse<IdResponse> deleteProject(@PathVariable("projectId") Long projectId) {
 
         Long responseId = projectService.deleteProject(projectId);
-        IdResponse response = new IdResponse(responseId);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("프로젝트 삭제 성공")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
     }
 
     //프로젝트 멤버 등록 /api/projects/{projectId}/members
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = "/{projectId}/members")
-    public ResponseEntity<IdResponse> createProjectMember(@PathVariable long projectId, @RequestBody
+    public CommonResponse<IdResponse> createProjectMember(@PathVariable long projectId, @RequestBody
     @Valid ProjectMemberRegisterRequest projectMemberRegisterRequest,
                                                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -89,16 +130,24 @@ public class ProjectRestController {
         }
 
         Long responseId = projectService.createProjectMember(projectId, projectMemberRegisterRequest);
-        IdResponse response = new IdResponse(responseId);
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(201)
+            .resultMessage("프로젝트 멤버 등록 성공")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
+
     }
 
 
     //프로젝트 멤버 수정 /api/projects/{projectId}/members/{memberId}
-    @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/{projectId}/members/{memberId}")
-    public ResponseEntity<IdResponse> modifyProjectMember(@PathVariable("projectId") Long projectId, @PathVariable Long memberId,
+    public CommonResponse<IdResponse> modifyProjectMember(@PathVariable("projectId") Long projectId, @PathVariable Long memberId,
                                                           @RequestBody @Valid ProjectMemberModifyRequest projectMemberModifyRequest,
                                                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -106,30 +155,56 @@ public class ProjectRestController {
         }
 
         Long responseId = projectService.modifyProjectMember(projectId, memberId, projectMemberModifyRequest);
-        IdResponse response = new IdResponse(responseId);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("프로젝트 멤버 수정 성공")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
+
     }
 
     //프로젝트 멤버 삭제 /api/projects/{projectId}/members/{memberId}
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = "/{projectId}/members/{memberId}")
-    public ResponseEntity<IdResponse> deleteProjectMember(@PathVariable("projectId") Long projectId, @PathVariable Long memberId) {
+    public CommonResponse<IdResponse> deleteProjectMember(@PathVariable("projectId") Long projectId, @PathVariable Long memberId) {
 
         Long responseId = projectService.deleteProjectMember(projectId, memberId);
-        IdResponse response = new IdResponse(responseId);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("프로젝트 멤버 삭제 성공")
+            .build();
+
+        return CommonResponse.<IdResponse>builder()
+            .header(header)
+            .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
+
     }
 
     //프로젝트 아이디로 프로젝트 조회 /api/projects/{projectId}
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{projectId}")
-    public ResponseEntity<ProjectDto> getProjectByProjectId(@PathVariable("projectId") Long projectId) {
+    public CommonResponse<ProjectDto> getProjectByProjectId(@PathVariable("projectId") Long projectId) {
 
         ProjectDto projectDto = projectService.getProjectByProjectId(projectId);
 
-        return new ResponseEntity<>(projectDto, HttpStatus.OK);
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("프로젝트 아이디로 프로젝트 조회")
+            .build();
+
+        return CommonResponse.<ProjectDto>builder()
+            .header(header)
+            .result(Collections.singletonList(projectDto))
+            .build();
     }
 
     //멤버 아이디로 프로젝트 리스트 조회 /api/projects/members/{memberId}
@@ -138,6 +213,17 @@ public class ProjectRestController {
     public ResponseEntity<List<ProjectDto>> getProjectsByMemberId(@PathVariable Long memberId) {
 
         List<ProjectDto> projectDtos = projectService.getProjectsByMemberId(memberId);
+
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("프로젝트 등록 성공")
+            .build();
+
+//        return CommonResponse.<IdResponse>builder()
+//            .header(header)
+//            .result(Collections.singletonList(new IdResponse(responseId)))
+//            .build();
 
         return new ResponseEntity<>(projectDtos, HttpStatus.OK);
     }

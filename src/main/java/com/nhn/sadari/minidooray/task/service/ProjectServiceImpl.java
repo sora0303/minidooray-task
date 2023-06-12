@@ -169,6 +169,7 @@ public class ProjectServiceImpl implements ProjectService{
     @Override
     @Transactional
     public ProjectDto getProjectByProjectId(Long projectId){
+        Project project = getProject(projectId);
         return projectRepository.getProjectById(projectId);
     }
 

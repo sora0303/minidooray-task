@@ -3,10 +3,14 @@ package com.nhn.sadari.minidooray.task.service;
 import com.nhn.sadari.minidooray.task.domain.MilestoneRegisterRequest;
 import com.nhn.sadari.minidooray.task.domain.TagDto;
 import com.nhn.sadari.minidooray.task.domain.TagRegisterRequest;
+import com.nhn.sadari.minidooray.task.domain.TaskDto;
 import com.nhn.sadari.minidooray.task.domain.TaskModifyRequest;
 import com.nhn.sadari.minidooray.task.domain.TaskRegisterRequest;
 import com.nhn.sadari.minidooray.task.entity.Milestone;
 import com.nhn.sadari.minidooray.task.entity.Project;
+import com.nhn.sadari.minidooray.task.entity.QProject;
+import com.nhn.sadari.minidooray.task.entity.QProjectMember;
+import com.nhn.sadari.minidooray.task.entity.QTask;
 import com.nhn.sadari.minidooray.task.entity.Tag;
 import com.nhn.sadari.minidooray.task.entity.Task;
 import com.nhn.sadari.minidooray.task.entity.TaskManager;
@@ -21,11 +25,13 @@ import com.nhn.sadari.minidooray.task.repository.TagRepository;
 import com.nhn.sadari.minidooray.task.repository.TaskManagerRepository;
 import com.nhn.sadari.minidooray.task.repository.TaskRepository;
 import com.nhn.sadari.minidooray.task.repository.TaskTagRepository;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.query.JpaQueryMethodFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +49,8 @@ public class TaskServiceImpl implements TaskService {
     private final TaskTagRepository taskTagRepository;
 
     private final TaskManagerRepository taskManagerRepository;
+
+    private final JPAQueryFactory queryFactory;
 
 
     private Task getTask(long taskId) {
@@ -188,6 +196,14 @@ public class TaskServiceImpl implements TaskService {
         Task task = getTask(taskId);
         taskRepository.delete(task);
         return task.getId();
+    }
+
+
+    //프로젝트 아이디로 업무 조회
+    public List<TaskDto> getTasksByProjectId(Long projectId) {
+        Project project = getProject(projectId);
+        List<TaskDto> tasks = taskRepository.findAllByProject_Id(projectId);
+        return tasks;
     }
 
 

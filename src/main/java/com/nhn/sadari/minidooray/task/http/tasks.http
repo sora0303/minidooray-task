@@ -53,3 +53,10 @@ Content-Type: application/json
 DELETE /api/projects/8/tasks/8
 Host: localhost:9090
 Content-Type: application/json
+
+### 프로젝트 아이디로 업무 조회
+GET /api/projects/1/tasks
+Host: localhost:9090
+Content-Type: application/json
+
+### 업무 아이디로 업무 조회

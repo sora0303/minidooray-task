@@ -1,6 +1,8 @@
 package com.nhn.sadari.minidooray.task.service;
 
+import com.nhn.sadari.minidooray.task.domain.MilestoneDto;
 import com.nhn.sadari.minidooray.task.domain.MilestoneRegisterRequest;
+import com.nhn.sadari.minidooray.task.domain.TagDto;
 import com.nhn.sadari.minidooray.task.domain.TagRegisterRequest;
 import com.nhn.sadari.minidooray.task.entity.Milestone;
 import com.nhn.sadari.minidooray.task.entity.Project;
@@ -11,6 +13,7 @@ import com.nhn.sadari.minidooray.task.exception.TagNotFoundException;
 import com.nhn.sadari.minidooray.task.repository.MilestoneRepository;
 import com.nhn.sadari.minidooray.task.repository.ProjectRepository;
 import com.nhn.sadari.minidooray.task.repository.TagRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -78,5 +81,14 @@ public class MilestoneServiceImpl implements MilestoneService{
 
         milestoneRepository.delete(milestone);
         return milestone.getId();
+    }
+
+
+    //프로젝트 아이디로 마일스톤 조회 /api/projects/{projectId}/milestones
+    @Override
+    public List<MilestoneDto> getMilestonesByProjectId(Long projectId){
+        Project project = getProject(projectId);
+        List<MilestoneDto> milestones = milestoneRepository.getMilestonesByProject_Id(projectId);
+        return milestones;
     }
 }

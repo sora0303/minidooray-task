@@ -3,7 +3,9 @@ package com.nhn.sadari.minidooray.task.controller;
 
 import com.nhn.sadari.minidooray.task.domain.CommonResponse;
 import com.nhn.sadari.minidooray.task.domain.IdResponse;
+import com.nhn.sadari.minidooray.task.domain.MilestoneDto;
 import com.nhn.sadari.minidooray.task.domain.MilestoneRegisterRequest;
+import com.nhn.sadari.minidooray.task.domain.TagDto;
 import com.nhn.sadari.minidooray.task.domain.TagRegisterRequest;
 import com.nhn.sadari.minidooray.task.exception.ValidationFailedException;
 import com.nhn.sadari.minidooray.task.service.MilestoneService;
@@ -16,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -95,6 +98,22 @@ public class MilestoneRestController {
         return CommonResponse.<IdResponse>builder()
             .header(header)
             .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
+    }
+
+    //마일스톤 조회 /api/projects/{projectId}/milestones
+    @GetMapping(value = "/{projectId}/milestones")
+    public CommonResponse<MilestoneDto> getMilestonesByProjectId(@PathVariable Long projectId) {
+
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("태그 조회 성공")
+            .build();
+
+        return CommonResponse.<MilestoneDto>builder()
+            .header(header)
+            .result(milestoneService.getMilestonesByProjectId(projectId))
             .build();
     }
 }

@@ -24,3 +24,7 @@ Host: localhost:9090
 Content-Type: application/json
 
 
+### 프로젝트 아이디로 태그 조회 /api/projects/{projectId}/tags
+GET /api/projects/1/tags
+Host: localhost:9090
+Content-Type: application/json

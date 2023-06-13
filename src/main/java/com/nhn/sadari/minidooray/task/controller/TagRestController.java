@@ -3,6 +3,7 @@ package com.nhn.sadari.minidooray.task.controller;
 
 import com.nhn.sadari.minidooray.task.domain.CommonResponse;
 import com.nhn.sadari.minidooray.task.domain.IdResponse;
+import com.nhn.sadari.minidooray.task.domain.TagDto;
 import com.nhn.sadari.minidooray.task.domain.TagRegisterRequest;
 import com.nhn.sadari.minidooray.task.entity.Tag;
 import com.nhn.sadari.minidooray.task.exception.TagNotFoundException;
@@ -11,12 +12,14 @@ import com.nhn.sadari.minidooray.task.repository.TagRepository;
 import com.nhn.sadari.minidooray.task.service.TagService;
 import java.util.Collections;
 import javax.validation.Valid;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -96,6 +99,22 @@ public class TagRestController {
         return CommonResponse.<IdResponse>builder()
             .header(header)
             .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
+    }
+
+    // 프로젝트 아이디로 태그 조회 /api/projects/{projectId}/tags
+    @GetMapping(value = "/{projectId}/tags")
+    public CommonResponse<TagDto> getTagsByProjectId(@PathVariable Long projectId) {
+
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("태그 조회 성공")
+            .build();
+
+        return CommonResponse.<TagDto>builder()
+            .header(header)
+            .result(tagService.getTagsByProjectId(projectId))
             .build();
     }
 }

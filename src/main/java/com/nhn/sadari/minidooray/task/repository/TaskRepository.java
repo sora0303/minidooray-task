@@ -1,7 +1,6 @@
 package com.nhn.sadari.minidooray.task.repository;
 
 import com.nhn.sadari.minidooray.task.domain.TaskDto;
-import com.nhn.sadari.minidooray.task.domain.TaskMakingDto;
 import com.nhn.sadari.minidooray.task.entity.Task;
 import com.nhn.sadari.minidooray.task.entity.TaskTag;
 import java.util.List;

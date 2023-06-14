@@ -1,6 +1,7 @@
 package com.nhn.sadari.minidooray.task.domain;
 
 import com.sun.istack.NotNull;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class CommentRegisterRequest {
     Long writerId;
 
     @NotNull
+    @NotBlank
     String contents;
 
     @Builder

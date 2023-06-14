@@ -13,4 +13,6 @@ public interface MilestoneService {
     Long deleteMilestone(Long projectId, Long milestoneId);
 
     List<MilestoneDto> getMilestonesByProjectId(Long projectId);
+
+    MilestoneDto getMilestoneById(Long milestoneId);
 }

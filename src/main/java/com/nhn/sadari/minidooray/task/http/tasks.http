@@ -1,5 +1,5 @@
 ### 업무 등록
-POST /api/projects/1/tasks
+POST /api/projects/2/tasks
 Host: localhost:9090
 Content-Type: application/json
 
@@ -55,8 +55,11 @@ Host: localhost:9090
 Content-Type: application/json
 
 ### 프로젝트 아이디로 업무 조회
-GET /api/projects/1/tasks
+GET /api/projects/2/tasks
 Host: localhost:9090
 Content-Type: application/json
 
 ### 업무 아이디로 업무 조회
+GET /api/projects/1/tasks/1
+Host: localhost:9090
+Content-Type: application/json

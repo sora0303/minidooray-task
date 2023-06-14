@@ -3,6 +3,7 @@ package com.nhn.sadari.minidooray.task.controller;
 
 import com.nhn.sadari.minidooray.task.domain.CommonResponse;
 import com.nhn.sadari.minidooray.task.domain.IdResponse;
+import com.nhn.sadari.minidooray.task.domain.TaskDto;
 import com.nhn.sadari.minidooray.task.domain.TaskModifyRequest;
 import com.nhn.sadari.minidooray.task.domain.TaskRegisterRequest;
 import com.nhn.sadari.minidooray.task.exception.ValidationFailedException;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -96,6 +98,38 @@ public class TaskRestController {
         return CommonResponse.<IdResponse>builder()
             .header(header)
             .result(Collections.singletonList(new IdResponse(responseId)))
+            .build();
+    }
+
+    //프로젝트 아이디로 업무 리스트 조회 /api/projects/{projectId}/tasks
+    @GetMapping(value = "/{projectId}/tasks")
+    public CommonResponse<TaskDto> getTasksByProjectId(@PathVariable Long projectId) {
+
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("프로젝트 아이디로 업무 리스트 조회 성공")
+            .build();
+
+        return CommonResponse.<TaskDto>builder()
+            .header(header)
+            .result(taskService.getTasksByProjectId(projectId))
+            .build();
+    }
+
+    //업무 아이디로 업무 조회 /api/projects/{projectId}/tasks/{taskId}
+    @GetMapping(value = "/{projectId}/tasks/{taskId}")
+    public CommonResponse<TaskDto> getTaskBytaskId(@PathVariable Long taskId) {
+
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("업무 아이디로 업무 조회 성공")
+            .build();
+
+        return CommonResponse.<TaskDto>builder()
+            .header(header)
+            .result(Collections.singletonList(taskService.getTaskByTaskId(taskId)))
             .build();
     }
 }

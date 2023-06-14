@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MilestoneServiceImpl implements MilestoneService{
 
+
     private final MilestoneRepository milestoneRepository;
     private final ProjectRepository projectRepository;
 
@@ -90,5 +91,13 @@ public class MilestoneServiceImpl implements MilestoneService{
         Project project = getProject(projectId);
         List<MilestoneDto> milestones = milestoneRepository.getMilestonesByProject_Id(projectId);
         return milestones;
+    }
+
+    //마일스톤 아이디로 마일스톤 조회 /api/projects/{projectId}/milestones/{milestoneId}
+    @Override
+    public MilestoneDto getMilestoneById(Long milestoneId) {
+        Milestone milestone = getMilestone(milestoneId);
+        return milestoneRepository.getMilestoneById(milestoneId);
+
     }
 }

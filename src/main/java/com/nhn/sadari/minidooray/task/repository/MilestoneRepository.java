@@ -8,4 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MilestoneRepository extends JpaRepository<Milestone, Long> {
 
     List<MilestoneDto> getMilestonesByProject_Id(Long projectId);
+
+    MilestoneDto getMilestoneById(Long id);
+
 }

@@ -166,7 +166,7 @@ public class ProjectServiceImpl implements ProjectService{
 //    }
 
 
-    //프로젝트 아이디로 프로젝트 아이디로 조회 /api/projects/{projectId}
+    //프로젝트 아이디로 프로젝트 조회 /api/projects/{projectId}
     @Override
     @Transactional
     public ProjectDto getProjectByProjectId(Long projectId){

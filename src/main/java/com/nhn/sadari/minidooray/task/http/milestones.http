@@ -34,7 +34,12 @@ DELETE /api/projects/1/milestones/1
 Host: localhost:9090
 Content-Type: application/json
 
-### 프로젝트 아이디로 마일스톤 조회 /api/projects/{projectId}/milestones
+### 프로젝트 아이디로 마일스톤 조회
 GET /api/projects/1/milestones
+Host: localhost:9090
+Content-Type: application/json
+
+### 마일스톤 아이디로 마일스톤 조회
+GET /api/projects/1/milestones/1
 Host: localhost:9090
 Content-Type: application/json

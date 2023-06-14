@@ -101,19 +101,35 @@ public class MilestoneRestController {
             .build();
     }
 
-    //마일스톤 조회 /api/projects/{projectId}/milestones
+    // 프로젝트 아이디로 마일스톤 조회 /api/projects/{projectId}/milestones
     @GetMapping(value = "/{projectId}/milestones")
     public CommonResponse<MilestoneDto> getMilestonesByProjectId(@PathVariable Long projectId) {
 
         CommonResponse.Header header = CommonResponse.Header.builder()
             .isSuccessful(true)
             .resultCode(200)
-            .resultMessage("태그 조회 성공")
+            .resultMessage("마일스톤 리스트 조회 성공")
             .build();
 
         return CommonResponse.<MilestoneDto>builder()
             .header(header)
             .result(milestoneService.getMilestonesByProjectId(projectId))
+            .build();
+    }
+
+    //마일스톤 조회 /api/projects/{projectId}/milestones
+    @GetMapping(value = "/{projectId}/milestones/{milestoneId}")
+    public CommonResponse<MilestoneDto> getMilestoneById(@PathVariable Long milestoneId) {
+
+        CommonResponse.Header header = CommonResponse.Header.builder()
+            .isSuccessful(true)
+            .resultCode(200)
+            .resultMessage("마일스톤 조회 성공")
+            .build();
+
+        return CommonResponse.<MilestoneDto>builder()
+            .header(header)
+            .result(Collections.singletonList(milestoneService.getMilestoneById(milestoneId)))
             .build();
     }
 }

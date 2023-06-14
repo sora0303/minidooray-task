@@ -69,5 +69,11 @@ public class CommentServiceImpl implements CommentService {
         return comment.getId();
     }
 
+    //댓글 조회
+
+
+
+    //댓글 리스트 조회
+
 
 }
